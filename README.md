@@ -23,30 +23,9 @@ A python module to help automatize report generation based on jinja2 with suppor
 
 ## Installation
 
-Clone the repository:
-
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-```
-
-Create and activate a virtual environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-On Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
+git clone https://github.com/RikFerreira/typeforge.git
+pip install ./typeforge
 ```
 
 ## Usage
