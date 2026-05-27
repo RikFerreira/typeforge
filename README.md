@@ -1,5 +1,10 @@
 # TypeForge
 
+![Static Badge](https://img.shields.io/badge/ArcGIS%20Online-Ready-blue?logo=arcgis)
+![Static Badge](https://img.shields.io/badge/ArcGIS%20Pro-Ready-blue?logo=arcgis)
+![Static Badge](https://img.shields.io/badge/QGIS-Ready-green?logo=qgis)
+![Static Badge](https://img.shields.io/badge/PostGIS-Ready-red?logo=postgresql)
+
 ![TypeForge](img/cover.png)
 
 A python module to help automatize report generation based on jinja2 with support for multiple databases.
