@@ -1,4 +1,3 @@
-from distributed import warn
 from arcgis.features import FeatureSet, FeatureLayer
 from arcgis.gis import GIS
 from typing import Literal, Optional

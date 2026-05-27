@@ -23,6 +23,6 @@ for i in tqdm(
     dynamic_ncols=True,
     mininterval=0.2,
     leave=True,
-    bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [elapsed: {elapsed} < {remaining}, {rate_fmt}]"
+    bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [Time elapsed: {elapsed} < ETA: {remaining}, {rate_fmt}]"
 ):
     continue

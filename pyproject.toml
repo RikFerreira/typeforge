@@ -12,6 +12,10 @@ license = { file = "LICENSE" }
 authors = [
   { name = "Rik F. Alves" }
 ]
+dependencies = [
+  "arcgis",
+  "tqdm",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
