@@ -28,5 +28,6 @@ env/
 .DS_Store
 Thumbs.db
 
-# Environment variables
+# Environment variables and development secrets
+dev/
 .env

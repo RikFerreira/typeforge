@@ -68,6 +68,11 @@ def get_agol_feature_layer(
         out_fields = fields,
         return_geometry = return_geometry
     )
+
+    object_ids = agol_feature_layer.query(
+        where = filter_expression,
+        return_ids_only = True
+    ).get('objectIds')
     
     agol_features_dict = agol_features.to_dict()
 
@@ -76,34 +81,44 @@ def get_agol_feature_layer(
     if attachments_action == 'metadata':
         return out_dict
 
-    agol_feature_layer.properties.objectIdField
     attachments_dir = attachments_dir or 'arcgis_attachments'
+    os.makedirs(attachments_dir, exist_ok=True)
 
-    try:
-        os.mkdir(attachments_dir)
-    except FileExistsError:
-        warnings.warn(f"The directory << {attachments_dir} >> already exists. Attachments will be downloaded to this directory.")
+    # Chatgpt here
+    oid_field = agol_feature_layer.properties.objectIdField
+    oid_to_feature = {feat[oid_field]: feat for feat in out_dict}
+    #end of chatgpt
 
-    oid_list = [od[agol_feature_layer.properties.objectIdField] for od in out_dict]
+    result = list()
 
-    attachments_metadata = list()
     for oid in tqdm(
-        oid_list,
+        object_ids,
         desc="Downloading attachments",
-        unit="file",
+        unit="feature",
         bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [Time elapsed: {elapsed} < ETA: {remaining}, {rate_fmt}]"
     ):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-
             attachments_info = agol_feature_layer.attachments.get_list(oid=oid)
-            attachments_metadata.extend(attachments_info)
 
-            for att in attachments_info:
-                agol_feature_layer.attachments.download(
-                    oid = oid,
-                    attachment_id = att['id'],
-                    save_path = attachments_dir
-                )
+        if not attachments_info:
+            tqdm.write(f"[WARNING] Feature OID={oid} has no attachments. Skipping.")
+            continue
 
-    return out_dict, attachments_metadata
+        feature_context = oid_to_feature.get(oid, {})
+
+        for att in attachments_info:
+            agol_feature_layer.attachments.download(
+                oid=oid,
+                attachment_id=att['id'],
+                save_path=attachments_dir
+            )
+            result.append({
+                **feature_context,
+                "attachment_id": att['id'],
+                "attachment_name": att['name'],
+                "attachment_size": att.get('size'),
+                "attachment_content_type": att.get('contentType'),
+            })
+
+    return result
