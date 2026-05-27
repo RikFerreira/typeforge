@@ -1,4 +1,6 @@
-# Typeforge
+# TypeForge
+
+![TypeForge](img/cover.png)
 
 A python module to help automatize report generation based on jinja2 with support for multiple databases.
 
