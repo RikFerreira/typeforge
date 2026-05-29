@@ -1,19 +1,40 @@
 def pluck_first(list_records: list = None, key: str = None):
-    if key is None:
-        return f"{key} is not a valid key. Please provide a valid key to pluck_first filter."
+    if not isinstance(key, str):
+        return "No valid key provided. Please provide a string key to the pluck_first filter."
 
-    if list_records is None or len(list_records) == 0:
-        return f"No records found. Please provide a valid list of records to pluck_first filter."
+    if not isinstance(list_records, list) or len(list_records) == 0:
+        return "No records found. Please provide a non-empty list of records to the pluck_first filter."
 
     first_record = list_records[0]
 
     if not isinstance(first_record, dict):
-        return f"The first record is not a dictionary. Please provide a valid list of records to pluck_first filter."
+        return "The first record is not a dictionary. Please provide a valid list of records to the pluck_first filter."
 
     if key not in first_record:
-        return f"Key << {key} >> not found in the first record. Please provide a valid key to pluck_first filter."
+        return f"Key << {key} >> not found in the first record. Please provide a valid key to the pluck_first filter."
 
     return first_record[key]
+
+def pluck_where(list_records: list = None, condition: dict = None, key: str = None):
+    if not isinstance(key, str):
+        return "No valid key provided. Please provide a string key to the pluck_where filter."
+
+    if not isinstance(condition, dict) or len(condition) == 0:
+        return "No valid condition provided. Please provide a non-empty dict condition to the pluck_where filter."
+
+    if not isinstance(list_records, list) or len(list_records) == 0:
+        return "No records found. Please provide a non-empty list of records to the pluck_where filter."
+
+    result = []
+
+    for record in list_records:
+        if not isinstance(record, dict):
+            return "All records must be dictionaries. Please provide a valid list of records to the pluck_where filter."
+
+        if all(record.get(k) == v for k, v in condition.items()):
+            result.append(record.get(key))
+
+    return result
 
 # def multiple_check_boxes(value, domain):
 #     print_dict = {a: '☑' if b else '☐' for a, b in zip(domain, [x == value for x in domain])}

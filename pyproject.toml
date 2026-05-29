@@ -17,6 +17,12 @@ dependencies = [
   "tqdm",
   "docxtpl",
   "jinja2",
+  "docx",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
 ]
 
 [tool.setuptools]

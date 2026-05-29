@@ -31,3 +31,8 @@ Thumbs.db
 # Environment variables and development secrets
 dev/
 .env
+*.bak
+
+# Claude files
+.claude/
+claude_*

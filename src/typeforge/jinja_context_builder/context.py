@@ -6,7 +6,7 @@ import warnings
 from typeforge.jinja_context_builder import filters
 
 class Context:
-    def __init__(self, dict_context: dict | list, labels: str | list, dict_list_as_feature_list: bool = False):
+    def __init__(self, dict_context: dict | list, labels: str | list):
         self._context = {}
         self._jinja_env = jinja2.Environment()
         self._empty_filters = {}
