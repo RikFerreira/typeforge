@@ -6,10 +6,16 @@ import warnings
 from typeforge.jinja_context_builder import filters
 
 class Context:
-    def __init__(self, dict_context: dict | list, labels: list):
+    def __init__(self, dict_context: dict | list, labels: str | list, dict_list_as_feature_list: bool = False):
         self._context = {}
         self._jinja_env = jinja2.Environment()
         self._empty_filters = {}
+
+        # input_validation = {
+        #     'dict_context is dict or list': isinstance(dict_context, (dict, list)),
+        #     'labels is str or list': isinstance(labels, (str, list)),
+        #     'dict_list but single feature'
+        # }
 
         dict_context_list = [dict_context] if isinstance(dict_context, dict) else dict_context
         labels_list = [labels] if isinstance(labels, str) else labels
@@ -17,8 +23,8 @@ class Context:
         if len(dict_context_list) != len(labels_list):
             raise Exception("The length of dict_context and labels must be the same.")
 
-        if not all(isinstance(item, dict) for item in dict_context_list):
-            raise Exception("All items in dict_context must be dictionaries.")
+        # if not all(isinstance(item, dict) for item in dict_context_list):
+        #     raise Exception("All items in dict_context must be dictionaries.")
         
         if not all(isinstance(item, str) for item in labels_list):
             raise Exception("All items in labels must be strings.")
